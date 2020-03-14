@@ -1,0 +1,44 @@
+  .form-group{
+    margin:15px 5px;
+    position:relative;
+    &.black{
+        .form-label{
+            color:#000;
+        }
+    }
+
+    &.white{
+        .form-label{
+            color:#fff;
+        }
+    }
+}
+.form-label{
+    font-weight:600;
+    display:block;
+    font-size:0.8rem;
+    font-family:$font-family-monserrat;
+    padding:2px 0;
+    letter-spacing: 0.02rem;
+}
+.form-control{
+    border:none;
+    border: 1px solid rgb(232, 235, 241);
+    border-radius:5px;
+    padding:8px 11px;
+    line-height:2rem;
+    width:100%;
+    font-family:$font-family-monserrat;
+    font-weight:500;
+    font-size:0.8rem;
+    outline: none;
+}
+
+.form-control.is-danger{
+    border:1px solid red;
+}
+
+.form-feedback.is-danger{
+    color:red;
+    font-size:0.8rem;
+}
