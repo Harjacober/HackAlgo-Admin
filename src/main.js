@@ -7,6 +7,9 @@ import router from './router';
 import store from './store';
 import '@/assets/css/tailwind.css';
 import Loading from '@/components/loading.vue';
+import setupAxios from './utils/api';
+
+setupAxios();
 
 Vue.component('default-layout', Default);
 Vue.component('blank-layout', Blank);
