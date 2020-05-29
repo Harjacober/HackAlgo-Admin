@@ -8,6 +8,7 @@ import store from './store';
 import '@/assets/css/tailwind.css';
 import Loading from '@/components/loading.vue';
 import setupAxios from './utils/api';
+import Toaster from '@/components/Toaster';
 
 setupAxios();
 
@@ -16,6 +17,8 @@ Vue.component('blank-layout', Blank);
 Vue.component('loading', Loading);
 
 Vue.config.productionTip = false;
+
+Vue.use(Toaster);
 
 new Vue({
   router,
