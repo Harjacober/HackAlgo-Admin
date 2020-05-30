@@ -5,7 +5,7 @@
       enter-active-class="animated quick bounceInRight"
       leave-active-class="animated quick  bounceOutRight"
     >
-      <div :class="[t.theme, 'toaster flex']" v-for="t in toasters" :key="t.key">
+      <div :class="[t.theme, 'toaster flex justify-between']" v-for="t in toasters" :key="t.key">
         <span :class="[t.icon, 'icon']"></span>
         <span class="message">{{ t.message }} </span>
         <button class="btn btn-close to-right" @click="remove(t)">
@@ -124,6 +124,7 @@ export default {
       padding: 4px 3px;
       color: #fff;
       box-shadow: none;
+      height: 30px;
     }
     &.success {
       background: #4caf50;

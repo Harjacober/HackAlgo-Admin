@@ -2,7 +2,7 @@
     <div class="form-group" v-bind:class="[interfaceClass]">
         <label class="form-label">{{ label  }}</label>
         <input
-            type="text"
+            :type="type"
             ref="input"
             class="form-control"
             @input="$emit('input', $event.target.value);"
@@ -32,6 +32,10 @@ export default {
     interfaceClass: {
       type: String,
       default: 'white',
+    },
+    type: {
+      type: String,
+      default: 'text',
     },
   },
   mounted() {

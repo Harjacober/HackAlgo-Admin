@@ -33,6 +33,7 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register,
+    meta: { layout: 'blank' },
   },
   {
     path: '/recover-password',

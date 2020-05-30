@@ -10,21 +10,21 @@ export default {
     errorMessage: '',
   },
   mutations: {
-    loginRequest(state) {
+    authRequest(state) {
       state.status = RequestStatus.Loading;
       state.errorMessage = '';
     },
-    loginRequestSuccess(state) {
+    authRequestSuccess(state) {
       state.status = RequestStatus.Success;
     },
-    loginRequestFailure(state, { message }) {
+    authRequestFailure(state, { message }) {
       state.status = RequestStatus.Failure;
       state.errorMessage = message;
     },
   },
   actions: {
     login({ commit }, { username, password }) {
-      commit('loginRequest');
+      commit('authRequest');
       return axios
         .post(
           '/admin/login',
@@ -35,23 +35,56 @@ export default {
         )
         .then(({ data }) => {
           if (data.code !== 200) {
-            commit('loginRequestFailure', {
+            commit('authRequestFailure', {
               message: data.msg,
             });
           } else {
             setAuthToken(data.access_token);
-            commit('loginRequestSuccess');
+            commit('authRequestSuccess');
           }
         })
         .catch((error) => {
-          commit('loginRequestFailure', {
-            message: error.message,
+          commit('authRequestFailure', {
+            message: error.msg,
           });
         });
+    },
+    register({ commit }, { username, email, password }) {
+      commit('authRequest');
+      return new Promise((resolve, reject) => {
+        axios
+        .post(
+          '/admin/registration/',
+          jsonToFormData({
+            username,
+            email,
+            pswd: password,
+          }),
+        )
+        .then(({ data }) => {
+          if (data.code !== 200 || data.msg === 'Invalid email') {
+            commit('authRequestFailure', {
+              message: data.msg,
+            });
+          } else {
+            // setAuthToken(data.access_token);
+            commit('authRequestSuccess');
+            resolve(data);
+          }
+        })
+        .catch((error) => {
+          commit('authRequestFailure', {
+            message: error.msg,
+          });
+        });
+      });
     },
   },
   getters: {
     isLoggingIn(state) {
+      return state.status === RequestStatus.Loading;
+    },
+    isRegistering(state) {
       return state.status === RequestStatus.Loading;
     },
     hasError(state) {
