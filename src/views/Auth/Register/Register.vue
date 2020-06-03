@@ -40,7 +40,7 @@
                 >
                 </PasswordInput>
 
-                <Button :isLoading="isRegistering" :disabled="isRegistering" value="Register"></Button>
+                <Button :isLoading="isLoading" :disabled="isLoading" value="Register"></Button>
             </form>
              <div class="auth-content__bottom text-center">
                 <p class="text ">Already have an account? <router-link to="/login">Login</router-link></p>
@@ -98,18 +98,19 @@
     };
   },
   computed: {
-    ...mapGetters(['isRegistering', 'hasError']),
+    ...mapGetters(['isLoading', 'hasError']),
     ...mapState(['errorMessage']),
   },
   methods: {
     async handleSubmit() {
-      if (this.isRegistering) return;
+      if (this.isLoading) return;
       const username = this.formControls.username.value;
       const email = this.formControls.email.value;
       const password = this.formControls.password.value;
       this.register({ username, email, password }).then((data) => {
         this.$toaster.success('Registration was successful, kindly check your mail');
         this.resetForm();
+        this.$router.push('/verify-code');
       });
     },
     resetForm() {

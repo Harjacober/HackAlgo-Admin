@@ -27,7 +27,7 @@
             :placeholder="formControls.password.placeholder"
           ></PasswordInput>
 
-          <Button :isLoading="isLoggingIn" :disabled="isLoggingIn" value="Login"></Button>
+          <Button :isLoading="isLoading" :disabled="isLoading" value="Login"></Button>
         </form>
         <div class="auth-content__bottom text-center">
           <p class="text">
@@ -82,12 +82,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isLoggingIn', 'hasError']),
+    ...mapGetters(['isLoading', 'hasError']),
     ...mapState(['errorMessage']),
   },
   methods: {
     async handleSubmit() {
-      if (this.isLoggingIn) return;
+      if (this.isLoading) return;
       const username = this.formControls.username.value;
       const password = this.formControls.password.value;
       await this.login({ username, password });
