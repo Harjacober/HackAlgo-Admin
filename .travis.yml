@@ -19,7 +19,7 @@ jobs:
       skip_cleanup: true
       api_key:
         secure: fzEZ7rxtoKU9LYbVxzlUs6k8REssY1rREwXySAqXqweKA5mGM6+7J3WLxfFbw0dARzd+wly58LCvm9+oiU4wh6zeaLXZPygcUfB3hzWEWgRqhfXWf++h00Xpsu6/McmJbnMsu9tXowlDAMjrNZJdpS0MjHdlljnzK0yzUAMfL7twQtewoDSktErOiBY9V95Bi5WFWNa1KC0JXAEJWX76et22Gjg2VtLM3612GZSVfSxHbVNs0++2zMXVWV12yWdDYM8OdMu6IyfPtxqnXd+q9YKOGn1UocAjE7kG7k/i5xFeDQDPQh5NjGBvrXLh75t9IlgQM5N6SC9aJOTXK2+Dgr+0hxpGuVExPLQ8YZNziWq5Jbwntc9X4Oq9pqwNmwmPuYxw/sHVJbm+DSmTiu+oN8/JOz0OqYbB27J3l8yr6DBP6uNq3HaAP7u39o6kGf0tIhcNHTtbGQlY/E1xL+ZVLVc+bTS5HzeN9VrlOrHKU0x8knd4UaitgrjWOPyFJM8LO6RVVRvhkHb8mR1i7Hb0lXS3wXx3z7I1MSHg8h+rcKMa+Uz2u11UpM8PBAbE9MivdWW1zCjpqfoZ/Zxh/I3J/KyYS4CU8r0ZnXB4NP1E4OMlorhMMCDsMME9npV47bM2ZooBF5es3i+ojbcJe2pS5DiUN8u7MCbDoFG6xIu1iEE=
-      app: farmfrenzy-staging
+      app: HackAlgo-Admin-staging
 stages:
 - Testing/Static Analysis
 - Deployment
