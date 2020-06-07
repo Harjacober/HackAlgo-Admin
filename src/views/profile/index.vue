@@ -123,6 +123,7 @@ export default {
     },
     save() {
       // TODO: Update profile server side
+      this.origProfile = { ...this.profileForm };
       this.mode = 'view';
     },
     ...mapActions(['getProfile']),
