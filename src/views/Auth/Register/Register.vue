@@ -21,6 +21,7 @@
                 <TextInput
                     :label="formControls.email.label"
                     name="email"
+                    type="email"
                     v-model="formControls.email.value"
                     required
                     autocomplete="off"
@@ -39,10 +40,7 @@
                 >
                 </PasswordInput>
 
-                <Button
-                    value="Login"
-                >
-                </Button>
+                <Button :isLoading="isRegistering" :disabled="isRegistering" value="Register"></Button>
             </form>
              <div class="auth-content__bottom text-center">
                 <p class="text ">Already have an account? <router-link to="/login">Login</router-link></p>
@@ -52,9 +50,12 @@
     </div>
 </template>
 <script >
-import { TextInput, Button, PasswordInput } from '@/components/Form';
+  import { createNamespacedHelpers } from 'vuex';
+  import { TextInput, Button, PasswordInput } from '@/components/Form';
 
-export default {
+  const { mapState, mapGetters, mapActions } = createNamespacedHelpers('auth');
+
+  export default {
   name: 'register',
   components: {
     TextInput,
@@ -97,11 +98,32 @@ export default {
     };
   },
   computed: {
-
+    ...mapGetters(['isRegistering', 'hasError']),
+    ...mapState(['errorMessage']),
   },
   methods: {
-    handleSubmit() {
-      this.submitted = true;
+    async handleSubmit() {
+      if (this.isRegistering) return;
+      const username = this.formControls.username.value;
+      const email = this.formControls.email.value;
+      const password = this.formControls.password.value;
+      this.register({ username, email, password }).then((data) => {
+        this.$toaster.success('Registration was successful, kindly check your mail');
+        this.resetForm();
+      });
+    },
+    resetForm() {
+      this.formControls.username.value = '';
+      this.formControls.email.value = '';
+      this.formControls.password.value = '';
+    },
+    ...mapActions(['register']),
+  },
+  watch: {
+    hasError(val) {
+      if (val) {
+        this.$toaster.error(this.errorMessage);
+      }
     },
   },
 };
