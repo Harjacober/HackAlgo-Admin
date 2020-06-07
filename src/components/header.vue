@@ -1,14 +1,16 @@
 <template>
-  <header class="bg-white w-screen text-gray-900 flex justify-between items-end pr-3">
+  <header class="bg-white w-screen text-gray-900 flex justify-between items-center pr-3">
     <a class="text-3xl sideBarTrigger" href="#">
       <i class="uil uil-bars"></i>
     </a>
-    <router-link to="/profile" class="mr-4" aria-label="Profile">
-      <i class="uil uil-user"></i>
-    </router-link>
-    <button type="button" @click="logout" aria-label="Logout">
-      <i class="uil uil-exit" aria-hidden="true" />
-    </button>
+    <div class="flex">
+      <router-link to="/profile" class="mr-4" aria-label="Profile">
+        <i class="uil uil-user"></i>
+      </router-link>
+      <button type="button" @click="logout" aria-label="Logout">
+        <i class="uil uil-exit" aria-hidden="true" />
+      </button>
+    </div>
   </header>
 </template>
 <script>
