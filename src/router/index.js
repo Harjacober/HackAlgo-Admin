@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import {
-  Login, Register, Recover, ChangePassword,
-} from '../views/Auth';
-
+import { Login, Register, Recover, ChangePassword } from '../views/Auth';
 
 Vue.use(VueRouter);
 
@@ -58,6 +55,11 @@ const routes = [
     path: '/problemset/create',
     name: 'create problemset',
     component: () => import(/* webpackChunkName: "create-problemset" */ '../views/problemSet/create.vue'),
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "profile" */ '../views/profile/index.vue'),
   },
 ];
 

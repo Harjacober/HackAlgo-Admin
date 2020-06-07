@@ -1,21 +1,39 @@
 <template>
-  <div class='side-bar bg-white h-screen'>
+  <div class="side-bar bg-white h-screen">
     <div class="flex flex-col flex-no-wrap">
       <span class="flex lg:hidden justify-end text-4xl pt-5 pr-4">
-        <i class='uil uil-times sideBarTrigger'></i>
+        <i class="uil uil-times sideBarTrigger"></i>
       </span>
       <span>
         <p class="flex text-3xl font-thin side-bar-text-logo">
-          Admin</p>
+          Admin
+        </p>
       </span>
       <ul class="flex flex-col flex-no-wrap vertical-menu">
-        <li><router-link to="/"><i class='uil uil-analytics'></i>Home</router-link></li>
-        <li><router-link to="/problemset"><i class='uil uil-presentation-line'></i>Problem Set</router-link></li>
-        <li><router-link to="/contest"><i class='uil uil-parcel'></i>Contests</router-link></li>
-        <li><router-link to="/this"><i class='uil uil-sun'></i>Help</router-link></li>
-        <li><router-link to="/is"><i class='uil uil-cog'></i>Settings</router-link></li>
+        <li>
+          <router-link to="/" exact><i class="uil uil-analytics"></i>Home</router-link>
+        </li>
+        <li>
+          <router-link to="/problemset"
+            ><i class="uil uil-presentation-line"></i>Problem Set</router-link
+          >
+        </li>
+        <li>
+          <router-link to="/contest"><i class="uil uil-parcel"></i>Contests</router-link>
+        </li>
+        <li>
+          <router-link to="/this"><i class="uil uil-sun"></i>Help</router-link>
+        </li>
+        <li>
+          <router-link to="/profile"><i class="uil uil-user"></i>Profile</router-link>
+        </li>
+        <li>
+          <router-link to="/is"><i class="uil uil-cog"></i>Settings</router-link>
+        </li>
         <p class="classic-side-bar-header">Mad oh</p>
-        <li><router-link to="/is"><i class='uil uil-comment-heart'></i>Support</router-link></li>
+        <li>
+          <router-link to="/is"><i class="uil uil-comment-heart"></i>Support</router-link>
+        </li>
       </ul>
     </div>
   </div>
@@ -70,13 +88,14 @@ ul.vertical-menu {
       flex-flow: column nowrap;
       padding: 11px 0;
       .submenu {
-        transition: max-height .2s ease-in;
+        transition: max-height 0.2s ease-in;
         max-height: 0px;
         overflow: hidden;
       }
       .submenu.isOpen {
         display: flex;
-        margin: 0; padding: 0;
+        margin: 0;
+        padding: 0;
         height: auto;
         max-height: 200px;
         border-left: 2px solid #ccc;
@@ -84,14 +103,14 @@ ul.vertical-menu {
     }
     a:hover {
       background: rgba(2, 19, 255, 0.1);
-;
     }
   }
   .has-icon {
     display: flex;
     flex-flow: row nowrap;
   }
-  i, .has-icon > i {
+  i,
+  .has-icon > i {
     width: 37px;
   }
 }
