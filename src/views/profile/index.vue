@@ -8,41 +8,46 @@
       <!-- TODO: Handle profile pictures -->
       <img
         class="w-20 h-20 rounded-full mr-4 flex-shrink-0"
-        :src="avatar"
-        :alt="`Avatar of ${profile.name}`"
+        :src="isFetching ? '' : avatar"
+        :alt="isFetching ? '' : `Avatar of ${profileForm.name}`"
       />
       <div class="flex flex-col w-full">
-        <h5 class="text-lg">{{ profile.name }}</h5>
-        <h6 class="text-sm text-gray-600">{{ profile.email }}</h6>
+        <h5 class="text-lg">{{ isFetching ? 'Loading...' : profileForm.name }}</h5>
+        <h6 class="text-sm text-gray-600">
+          {{ isFetching ? 'Please wait...' : profileForm.email }}
+        </h6>
       </div>
       <button
         type="button"
         class="text-sm bg-green-600 text-white py-1 px-3 rounded font-bold flex-shrink-0"
         @click="switchToEditMode"
-        v-show="mode !== 'edit'"
-      >Edit Profile</button>
+        v-show="mode !== 'edit' && !isFetching"
+      >
+        Edit Profile
+      </button>
+      <clip-loader :loading="isFetching" size="28px" color="#38a169" />
     </div>
     <div class="px-8 pb-3 bg-gray-100 pt-5">
-      <editable-text class="mb-5" v-model="profile.name" label="Name" :mode="mode" />
+      <editable-text class="mb-5" v-model="profileForm.name" label="Name" :mode="mode" />
       <editable-text
         class="mb-5"
-        v-model="profile.birthday"
+        v-model="profileForm.birthday"
         label="Birthday"
         type="date"
         :mode="mode"
       />
       <editable-text
         class="mb-5"
-        v-model="profile.gender"
+        v-model="profileForm.gender"
         label="Gender"
         type="select"
         :options="genders"
         :mode="mode"
       />
-      <editable-text class="mb-5" v-model="profile.location" label="Location" :mode="mode" />
+      <editable-text class="mb-5" v-model="profileForm.location" label="Location" :mode="mode" />
       <editable-text
         class="mb-5"
-        v-model="profile.summary"
+        v-model="profileForm.summary"
         label="Summary"
         type="textarea"
         :mode="mode"
@@ -59,33 +64,32 @@
       <button
         type="submit"
         class="text-sm bg-green-600 text-white py-1 px-3 rounded font-bold flex-shrink-0 mr-4"
-      >Save Changes</button>
+      >
+        Save Changes
+      </button>
       <button
         type="reset"
         class="text-sm bg-transparent text-red-600 text-white py-1 px-3 rounded font-bold flex-shrink-0"
-      >Cancel</button>
+      >
+        Cancel
+      </button>
     </div>
   </form>
 </template>
 
 <script>
 import Vue from 'vue';
+import { createNamespacedHelpers } from 'vuex';
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue';
 import EditableText from '../../components/Form/EditableText.vue';
+
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('profile');
 
 export default {
   data() {
-    const profile = {
-      name: 'Joshua',
-      email: 'test@test.com',
-      birthday: '14/03/1993',
-      gender: 'female',
-      location: 'Ibadan, Nigeria',
-      summary: 'Nothing to see here, looking for a job',
-      image: 'https://randomuser.me/api/portraits/men/61.jpg',
-    };
     return {
-      profile: { ...profile },
-      origProfile: { ...profile },
+      profileForm: {},
+      origProfile: {},
       mode: 'view',
       profileImage: [],
       profileImagePreview: null,
@@ -105,12 +109,15 @@ export default {
       ],
     };
   },
+  async mounted() {
+    await this.getProfile();
+  },
   methods: {
     switchToEditMode() {
       this.mode = 'edit';
     },
     cancel() {
-      this.profile = { ...this.origProfile };
+      this.profileForm = { ...this.origProfile };
       this.profileImage = [];
       this.mode = 'view';
     },
@@ -118,11 +125,17 @@ export default {
       // TODO: Update profile server side
       this.mode = 'view';
     },
+    ...mapActions(['getProfile']),
   },
   computed: {
     avatar() {
-      return this.profileImagePreview || this.profile.image;
+      return this.profileImagePreview || this.profileForm.profilephoto || this.placeholderAvatar;
     },
+    placeholderAvatar() {
+      return `https://avatars.dicebear.com/api/initials/${this.profileForm.name}.svg`;
+    },
+    ...mapState(['profile', 'errorMessage']),
+    ...mapGetters(['isFetching', 'hasError']),
   },
   watch: {
     profileImage(val) {
@@ -134,6 +147,15 @@ export default {
         this.profileImagePreview = URL.createObjectURL(val[0]);
       }
     },
+    profile(val) {
+      this.profileForm = { ...val };
+      this.origProfile = { ...val };
+    },
+    hasError(val) {
+      if (val) {
+        this.$toaster.error(this.errorMessage);
+      }
+    },
   },
   beforeDestroy() {
     if (this.profileImagePreview) {
@@ -142,6 +164,7 @@ export default {
   },
   components: {
     EditableText,
+    ClipLoader,
   },
 };
 </script>
