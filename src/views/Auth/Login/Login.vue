@@ -91,6 +91,9 @@ export default {
       const username = this.formControls.username.value;
       const password = this.formControls.password.value;
       await this.login({ username, password });
+      this.$router.push({
+        name: 'home',
+      });
     },
     ...mapActions(['login']),
   },
