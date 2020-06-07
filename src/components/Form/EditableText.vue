@@ -28,9 +28,10 @@
       v-bind="$attrs"
       :id="`${label}-input`"
     />
+    <!-- The type check prevents the "clear" icon from showing in view mode -->
     <input
       v-else
-      :type="type"
+      :type="type === 'date' && mode === 'view' ? 'text' : type"
       :disabled="mode === 'view'"
       :class="[
         'text-lg bg-transparent mb-1 py-1 border rounded',
