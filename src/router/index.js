@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import {
-  Login, Register, Recover, ChangePassword,
+  Login, Register, Recover, ChangePassword, VerifyCode,
 } from '../views/Auth';
 
 
@@ -44,6 +44,12 @@ const routes = [
     path: '/change-password',
     name: 'change-password',
     component: ChangePassword,
+  },
+  {
+    path: '/verify-code',
+    name: 'verify-code',
+    component: VerifyCode,
+    meta: { layout: 'blank' },
   },
   {
     path: '/contest',

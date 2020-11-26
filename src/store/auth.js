@@ -39,7 +39,6 @@ export default {
               message: data.msg,
             });
           } else {
-            setAuthToken(data.access_token);
             commit('authRequestSuccess');
           }
         })
@@ -79,12 +78,32 @@ export default {
         });
       });
     },
+    verifyCode({ commit }, { code }) {
+      commit('authRequest');
+      return new Promise((resolve, reject) => {
+        axios
+        .get(`/admin/registration/?id=${code}`)
+        .then(({ data }) => {
+          if (data.code !== 200) {
+            commit('authRequestFailure', {
+              message: data.msg,
+            });
+          } else {
+            setAuthToken(data.access_token);
+            commit('authRequestSuccess');
+            resolve(data);
+          }
+        })
+        .catch((error) => {
+          commit('authRequestFailure', {
+            message: error.msg,
+          });
+        });
+      });
+    },
   },
   getters: {
-    isLoggingIn(state) {
-      return state.status === RequestStatus.Loading;
-    },
-    isRegistering(state) {
+    isLoading(state) {
       return state.status === RequestStatus.Loading;
     },
     hasError(state) {
