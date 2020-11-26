@@ -1,4 +1,4 @@
-# farmfrenzy
+# HackAlgo-Admin
 
 ## Project setup
 ```
